@@ -11,8 +11,6 @@ def vit_fcn(name:str, num_classes:int):
     )
     model = nn.ModuleDict({'backbone': backbone, 'head': head})
     def forward(x):
-        feats = model['backbone'](x)[-1]
-        logits = model['head'](feats)
-        return logits
+        return model['head'](model['backbone'](x)[-1])
     model.forward = forward
     return model, 224
